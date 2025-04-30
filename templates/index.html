@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat dos Fãs da FURIA</title>
+    <link rel="shortcut icon" href="https://upload.wikimedia.org/wikipedia/pt/f/f9/Furia_Esports_logo.png" type="image/x-icon">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #111;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        #chat-box {
+            width: 80%;
+            height: 400px;
+            background: #333;
+            margin-top: 20px;
+            padding: 10px;
+            overflow-y: scroll;
+        }
+
+        #message-input {
+            width: 80%;
+            padding: 10px;
+            margin-top: 10px;
+            background: #444;
+            border: none;
+            color: white;
+        }
+
+        .emojiBtn {
+            background: #fff;
+            border-radius: 100%;
+            font-size: 20px;
+            border: none;
+            padding: 5px;
+            margin: 5px;
+            cursor: pointer;
+            transition: .3s;
+            margin: 10px;
+        }
+
+        .emojiBtn:hover{
+            box-shadow: 0 0 12px #fff;
+        }
+
+        #resultados{
+            background: #444;
+            color: white;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: .3s;
+        }
+
+        #resultados:hover{
+            background: #555;
+            box-shadow: 0 0 12px #fff;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Chat dos Fãs da FURIA</h2>
+    <img src="../Static/IMG/logo.png" alt="" srcset="">
+
+    <div id="chat-box">  
+        <div id="messages"></div>
+    </div>
+    <input type="text" id="message-input" placeholder="Digite uma mensagem...">
+    
+    <!-- Painel de Emojis -->
+    <div id="emoji-picker">
+        <button onclick="sendEmoji('🔥')" class="emojiBtn">🔥</button>
+        <button onclick="sendEmoji('💥')" class="emojiBtn">💥</button>
+        <button onclick="sendEmoji('🎮')" class="emojiBtn">🎮</button>
+    </div>
+    
+    <!-- Botão para ver resultados da FURIA -->
+    <button onclick="getMatchResults()" id="resultados">Ver Resultados da FURIA</button>
+    <div id="match-results"></div>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.min.js"></script>
+    <script>
+        var socket = io();
+
+        // Evento para exibir as mensagens
+        socket.on('message', function(msg) {
+            var messageDiv = document.getElementById('messages');
+            messageDiv.innerHTML += `<div>${msg}</div>`;
+        });
+
+        // Enviar mensagem
+        document.getElementById('message-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                var message = e.target.value;
+                socket.send(message);
+                e.target.value = '';
+            }
+        });
+
+        // Função para enviar um emoji
+        function sendEmoji(emoji) {
+            socket.emit('message', emoji);
+        }
+
+         // Função para obter e exibir os resultados da FURIA
+        function getMatchResults() {
+            fetch('/get_furia_results')
+                .then(response => response.json())
+                .then(data => {
+                    console.log("Dados recebidos:", data);  // Adicionando log para verificar os dados
+                    const resultsDiv = document.getElementById('match-results');
+                    resultsDiv.innerHTML = '<h3>Últimos Jogos da FURIA</h3>';
+
+                    // Verifique se há dados
+                    if (Array.isArray(data) && data.length > 0) {
+                        data.forEach(match => {
+                            // Verificando a estrutura do match
+                            if (match.opponents && match.opponents.length === 2) {
+                                const team1 = match.opponents[0].opponent.name;
+                                const team2 = match.opponents[1].opponent.name;
+                                const score1 = match.results[0]?.score;
+                                const score2 = match.results[1]?.score;
+                                const endAt = match.end_at;
+
+                                resultsDiv.innerHTML += `
+                                    <p><strong>${match.name}</strong><br>
+                                    ${team1} vs ${team2}<br>
+                                    Status: ${match.status}<br>
+                                    Data: ${new Date(endAt).toLocaleString('pt-BR')}<br>
+                                    Resultado: ${score1} x ${score2}</p>`;
+                            } else {
+                                console.log('Dados incompletos para o match:', match);
+                            }
+                        });
+                    } else {
+                        resultsDiv.innerHTML += "<p>Nenhum jogo encontrado.</p>";
+                    }
+                })
+                .catch(error => {
+                    console.error('Erro ao buscar os resultados:', error);
+                });
+        }
+
+
+
+
+    </script>
+</body>
+</html>
+
