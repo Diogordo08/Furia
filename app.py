@@ -55,3 +55,10 @@ def handle_connect():
 
 if __name__ == '__main__':
     socketio.run(app, host='0.0.0.0', port=5000, debug=True)
+
+## @VERSION: 1.0.4
+## @AUTHOR: DIOGOLEITE
+## @YEAR: 2025
+## @DESCRIPTION: Aplicação Flask com SocketIO para exibir resultados da FURIA em tempo real.
+## @GITHUB: https://github.com/Diogordo08
+## @PORTFOLIO: https://diogordo08.github.io
