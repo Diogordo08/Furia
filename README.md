@@ -17,3 +17,5 @@ Um sistema conversacional em tempo real para fãs da FURIA Esports, integrado co
   <img width="50" src="https://images-eds-ssl.xboxlive.com/image?url=4rt9.lXDC4H_93laV1_eHM0OYfiFeMI2p9MWie0CvL99U4GA1gf6_kayTt_kBblFwHwo8BW8JXlqfnYxKPmmBRXp912Lw.0Yxg2DfVOh1gnKXRQeKb8m8DA2Jkx6Xwk0yYA23Ude.JrHx3QjJv9hvUNKZhFYJFJP2QtF6zREDZk-&format=source"\>
 </p>
 
+### WIKI
+<a href="https://github.com/Diogordo08/Furia/wiki" >WIKI - GithHub docs</a>
