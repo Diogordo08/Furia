@@ -7,7 +7,7 @@ Um sistema conversacional em tempo real para fãs da FURIA Esports, integrado co
 
 ### Linguagens
 <p display="inline-block">
-  <img width="105" src="https://hermes.dio.me/articles/cover/9771699c-9db6-41fc-830e-01640308091d.png"\>
+  <img width="100" src="https://hermes.dio.me/articles/cover/9771699c-9db6-41fc-830e-01640308091d.png"\>
   <img width="48" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRuHnJDLOcdm_0b6N6kNj-1OvO9KhKYgqIy0w&s"\>
   <img width="48" src="https://149860134.v2.pressablecdn.com/wp-content/uploads/pythoned.png"\>
 </p>
